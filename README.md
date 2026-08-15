@@ -8,7 +8,7 @@ A tiny HUD for DeepSeek Harness, docked above the composer input:
 HP [97% ██████████] 137.8K/1M    Wallet ¥110.00    Spend 12.3K tok · ¥0.0432
 ```
 
-- **HP** — remaining effective context (the usable capacity left in the context window), drawn as a health bar. It holds near full while the context is efficient, then collapses as the window fills: ≈50% at 400K, ≈10% at 700K, ≈3% at 800K on a 1M-token window.
+- **HP** — remaining effective context, drawn as a health bar. It stays high while the context is efficient, then collapses as the window fills. **If HP is red, start a new session to keep performance.**
 - **Wallet** — your DeepSeek API account balance.
 - **Spend** — today's token count and estimated cost.
 
