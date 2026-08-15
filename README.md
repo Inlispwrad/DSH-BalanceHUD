@@ -1,4 +1,6 @@
-﻿# Balance HUD
+**English** | [简体中文](README.zh-CN.md)
+
+# Balance HUD
 
 A tiny HUD for DeepSeek Harness, docked above the composer input:
 

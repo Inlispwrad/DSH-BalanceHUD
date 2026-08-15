@@ -1,4 +1,6 @@
-﻿# Balance HUD(余额面板)
+[English](README.md) | **简体中文**
+
+# Balance HUD(余额面板)
 
 DeepSeek Harness 的迷你 HUD,固定在输入框正上方:
 

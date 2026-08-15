@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "dsh-balance-panel",
   "version": "1.0.0",
   "description": "Balance HUD - a tiny DeepSeek Harness plugin: a HUD above the composer showing remaining effective context (HP), API wallet balance, and today's token & cost spend.",

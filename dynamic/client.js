@@ -1,4 +1,4 @@
-﻿// DSH Balance Panel - DYNAMIC client half.
+// DSH Balance Panel - DYNAMIC client half.
 // Paste this whole body into `cordis_define` (code.client), English UI.
 // Registers into conversation.input.dock: HP bar (context remaining) with the
 // eased percentage inside the bar, API balance and today's spend in yellow.

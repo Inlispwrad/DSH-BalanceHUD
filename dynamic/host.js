@@ -1,4 +1,4 @@
-﻿// DSH Balance Panel - DYNAMIC host half.
+// DSH Balance Panel - DYNAMIC host half.
 // Paste this whole body into `cordis_define` (code.host) inside a session
 // running the `cordis` agent preset, then `cordis_run`.
 // Behavior: ledger of today's tokens/cost from every llm/stream call + the
