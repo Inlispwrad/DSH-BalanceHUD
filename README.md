@@ -1,77 +1,30 @@
-﻿# DSH Balance Panel
+﻿# Balance HUD
 
-## About
-
-DSH Balance Panel is a plugin for **DeepSeek Harness** that puts your live usage
-at a glance. Above the composer input it keeps a compact HUD with three
-readouts — **HP**: your remaining context as a health bar, **Wallet**: your
-DeepSeek API account balance, and **Spend**: today's token count with its
-estimated cost — so you never have to leave the conversation to check your
-numbers.
+A tiny HUD for DeepSeek Harness, docked above the composer input:
 
 ```
 HP [97% ██████████] 137.8K/1M    Wallet ¥110.00    Spend 12.3K tok · ¥0.0432
 ```
 
-- **HP** — context remaining as a health bar, color-coded by the displayed value
-  (green > 50%, yellow 20–50%, red ≤ 20%). The eased percentage is drawn inside
-  the bar; the real `used/limit` tokens sit beside it in a muted tone.
-- **Wallet** — your DeepSeek API balance, in yellow.
-- **Spend** — today's token count and estimated cost, cost in yellow.
+- **HP** — remaining effective context (the usable capacity left in the context window), drawn as a health bar. It holds near full while the context is efficient, then collapses as the window fills: ≈50% at 400K, ≈10% at 700K, ≈3% at 800K on a 1M-token window.
+- **Wallet** — your DeepSeek API account balance.
+- **Spend** — today's token count and estimated cost.
 
-The HP curve is `shown = r³(4 − 3r)` on the remaining fraction: it stays high
-while context is efficient and collapses as the window fills (≈50% at 400K,
-≈10% at 700K, ≈3% at 800K on a 1M-token window).
+Developed and tested on DSH `0.1.0-rc.6`.
 
-## Requirements
+## Install
 
-- A DSH (DeepSeek Harness) deployment with the web GUI.
-- The `DEEPSEEK_API_KEY` credential configured (Models settings page) for the
-  balance to work — the other two sections work without it.
+**Dynamic (no build)** — in a `cordis` session, `cordis_define` with [`dynamic/host.js`](dynamic/host.js) (host) and [`dynamic/client.js`](dynamic/client.js) (client), then `cordis_run`.
 
-## Quick start (dynamic, no build)
+**Static** — copy this package to `~/.dsh/profiles/web/packages/`, add `"dsh-balance-panel": "file:./packages/dsh-balance-panel"` to the profile `package.json`, append to `cordis.patch.yml`:
 
-On any device with the `cordis` agent preset:
+```yaml
+- insert:
+    - id: balance-panel
+      name: dsh-balance-panel
+```
 
-1. Open a session with the `cordis` preset.
-2. Call `cordis_define` with `code.host` = contents of
-   [`dynamic/host.js`](dynamic/host.js) and `code.client` = contents of
-   [`dynamic/client.js`](dynamic/client.js) (idPrefix: `blnc`).
-3. Call `cordis_run` and approve the run.
-
-The panel appears above the input box.
-
-## Static install (proper)
-
-Mount it as a dual-face plugin package in the web profile:
-
-1. Copy this package into the profile, e.g.
-   `~/.dsh/profiles/web/packages/dsh-balance-panel`.
-2. In `~/.dsh/profiles/web/package.json` add
-   `"dsh-balance-panel": "file:./packages/dsh-balance-panel"` to
-   `dependencies`, then run `pnpm install` in that directory.
-3. Append a row to `~/.dsh/profiles/web/cordis.patch.yml`:
-
-   ```yaml
-   - insert:
-       - id: balance-panel
-         name: dsh-balance-panel
-   ```
-
-4. Restart DSH.
-
-The node half (`lib/index.js`) tracks the ledger, fetches the balance, and
-serves `GET /dsh-balance-panel/state` (JSON). The browser half
-(`lib/client.js`) is a standard `dsh.client` web-plugin-table bundle: it reads
-the `contextPressure` projection for the HP bar and polls the state route.
-
-## Notes
-
-- **Cost is an estimate.** DeepSeek moved to dynamic peak/off-peak pricing
-  (2026-08-17); the reference rates live in the `PRICING` table at the top of
-  `lib/index.js` / `dynamic/host.js` — edit them to match your account.
-- Balance is cached for 60 s; a missing key or network failure shows `—`.
-- The "today" ledger resets at midnight and is process-local (reset on restart).
+then restart DSH.
 
 ## License
 
