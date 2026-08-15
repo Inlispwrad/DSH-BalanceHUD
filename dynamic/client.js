@@ -47,6 +47,12 @@ return {
 
     const BalancesDock = React.memo(function BalancesDock(props) {
       const pressure = props.useProjection ? props.useProjection('contextPressure') : undefined
+      // Queue strip (a sibling dock entry) has margin-bottom: -(gap+3px) to tuck
+      // against the composer card; when it renders above us it pulls this row up
+      // by that amount. Compensate with an equal margin-top only while queued.
+      const queueRows = props.useSession ? props.useSession((s) => s.queue || []) : []
+      const queueVisible = queueRows.some((r) => r && r.placement === 'queued')
+      const rowStyle = queueVisible ? { marginTop: 'calc(var(--dsh-composer-stack-gap) + 3px)' } : undefined
       const [state, setState] = React.useState({ balance: null, today: { tokens: 0, cost: 0 } })
 
       React.useEffect(() => {
@@ -103,7 +109,7 @@ return {
         React.createElement('span', { className: 'dsb-gold' }, fmtMoney(state.today.cost, 'CNY')),
       )
 
-      return React.createElement('div', { className: 'dsb-row' }, hpEl, walletEl, spendEl)
+      return React.createElement('div', { className: 'dsb-row', style: rowStyle }, hpEl, walletEl, spendEl)
     }, () => true)
 
     slots.inject('conversation.input.dock', () => slots.register(
