@@ -1,6 +1,13 @@
 ﻿# DSH Balance Panel
 
-A small panel above the composer input showing your current usage at a glance:
+## About
+
+DSH Balance Panel is a plugin for **DeepSeek Harness** that puts your live usage
+at a glance. Above the composer input it keeps a compact HUD with three
+readouts — **HP**: your remaining context as a health bar, **Wallet**: your
+DeepSeek API account balance, and **Spend**: today's token count with its
+estimated cost — so you never have to leave the conversation to check your
+numbers.
 
 ```
 HP [97% ██████████] 137.8K/1M    Wallet ¥110.00    Spend 12.3K tok · ¥0.0432

@@ -1,6 +1,8 @@
 ﻿# DSH-余额面板(DSH Balance Panel)
 
-在输入框正上方显示当前用量的小面板:
+## 关于
+
+DSH-余额面板是 **DeepSeek Harness** 的插件,用来便捷查看当前用量。它在输入框正上方维持一个紧凑 HUD,包含三项读数 —— **HP**:剩余上下文(血槽显示)、**Wallet**:DeepSeek API 账户余额、**Spend**:今日 Token 数与估算金额 —— 不用离开对话就能一眼掌握。
 
 ```
 HP [97% ██████████] 137.8K/1M    Wallet ¥110.00    Spend 12.3K tok · ¥0.0432
