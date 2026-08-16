@@ -18,12 +18,12 @@ HP [97% ██████████] 137.8K/1M    Wallet ¥110.00    Spend 12
 
 **动态(无需构建)** —— 在 `cordis` 会话中,`cordis_define` 的 host/client 分别填入 [`dynamic/host.js`](dynamic/host.js)、[`dynamic/client.js`](dynamic/client.js),然后 `cordis_run`。
 
-**静态** —— 把本包复制到 `~/.dsh/profiles/web/packages/`,在 profile 的 `package.json` 加入 `"dsh-balance-panel": "file:./packages/dsh-balance-panel"`,并在 `cordis.patch.yml` 追加下面内容,重启 DSH:
+**静态** —— 把本包复制到 `~/.dsh/profiles/web/packages/`,在 profile 的 `package.json` 加入 `"dsh-balance-hud": "file:./packages/dsh-balance-hud"`,并在 `cordis.patch.yml` 追加下面内容,重启 DSH:
 
 ```yaml
 - insert:
-    - id: balance-panel
-      name: dsh-balance-panel
+    - id: balance-hud
+      name: dsh-balance-hud
 ```
 
 ## 许可证

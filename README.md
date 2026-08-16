@@ -18,12 +18,12 @@ Developed and tested on DSH `0.1.0-rc.6`.
 
 **Dynamic (no build)** — in a `cordis` session, `cordis_define` with [`dynamic/host.js`](dynamic/host.js) (host) and [`dynamic/client.js`](dynamic/client.js) (client), then `cordis_run`.
 
-**Static** — copy this package to `~/.dsh/profiles/web/packages/`, add `"dsh-balance-panel": "file:./packages/dsh-balance-panel"` to the profile `package.json`, append to `cordis.patch.yml`:
+**Static** — copy this package to `~/.dsh/profiles/web/packages/`, add `"dsh-balance-hud": "file:./packages/dsh-balance-hud"` to the profile `package.json`, append to `cordis.patch.yml`:
 
 ```yaml
 - insert:
-    - id: balance-panel
-      name: dsh-balance-panel
+    - id: balance-hud
+      name: dsh-balance-hud
 ```
 
 then restart DSH.
