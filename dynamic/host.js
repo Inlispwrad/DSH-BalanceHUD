@@ -40,6 +40,8 @@ return {
 
     let balanceCache = { at: 0, value: null }
     let balanceFetching = null
+    let lastProvider = null
+    let lastModel = null
 
     async function fetchBalanceNow() {
       const credentials = ctx.get('credentials')
@@ -99,6 +101,8 @@ return {
     }
 
     ctx.on('llm/stream', (options, next) => {
+      lastProvider = options && options.provider ? options.provider : null
+      lastModel = options && options.model ? options.model : null
       const model = options && options.model ? options.model : 'unknown'
       return (async function* () {
         for await (const chunk of next()) {
@@ -115,11 +119,24 @@ return {
     })
 
     harness.handle('get-state', async () => {
-      const balance = await currentBalance()
+      let provider = lastProvider
+      let model = lastModel
+      if (!provider) {
+        const adm = ctx.get('agentDefaultModel')
+        if (adm) {
+          try {
+            const sel = adm.currentSelection()
+            if (sel && sel.provider) { provider = sel.provider; model = sel.model }
+          } catch (err) { /* selection unavailable */ }
+        }
+      }
+      const deepseek = provider === 'deepseek-official'
+      const balance = deepseek ? await currentBalance() : null
       const now = dayKey()
       const t = ledger.date === now ? ledger : { date: now, input: 0, output: 0, cacheRead: 0, cacheWrite: 0, cost: 0 }
       return {
         balance,
+        model: { provider: provider || null, model: model || null, deepseek },
         today: {
           tokens: t.input + t.output,
           input: t.input,

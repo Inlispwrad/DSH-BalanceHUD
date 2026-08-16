@@ -47,7 +47,7 @@ return {
 
     const BalancesDock = React.memo(function BalancesDock(props) {
       const pressure = props.useProjection ? props.useProjection('contextPressure') : undefined
-      const [state, setState] = React.useState({ balance: null, today: { tokens: 0, cost: 0 } })
+      const [state, setState] = React.useState({ balance: null, today: { tokens: 0, cost: 0 }, model: null })
 
       React.useEffect(() => {
         let alive = true
@@ -57,7 +57,12 @@ return {
             : a.balance !== null && b.balance !== null
               ? a.balance.total === b.balance.total && a.balance.currency === b.balance.currency
               : false
-          return sameBalance && a.today.tokens === b.today.tokens && a.today.cost === b.today.cost
+          const sameModel = a.model === null && b.model === null
+            ? true
+            : a.model !== null && b.model !== null
+              ? a.model.provider === b.model.provider && a.model.deepseek === b.model.deepseek
+              : false
+          return sameBalance && sameModel && a.today.tokens === b.today.tokens && a.today.cost === b.today.cost
         }
         const refresh = () => {
           host.call('get-state').then((v) => {
@@ -103,7 +108,8 @@ return {
         React.createElement('span', { className: 'dsb-gold' }, fmtMoney(state.today.cost, 'CNY')),
       )
 
-      return React.createElement('div', { className: 'dsb-row' }, hpEl, walletEl, spendEl)
+      const showWalletSpend = !state.model || state.model.deepseek !== false
+      return React.createElement('div', { className: 'dsb-row' }, hpEl, showWalletSpend ? walletEl : null, showWalletSpend ? spendEl : null)
     }, () => true)
 
     // Order 1: stay ABOVE the shipped dock strips (todo/goal/queue). When the
